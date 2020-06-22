@@ -11,6 +11,7 @@
     <modules>
         <module>MyTravel</module>
         <module>travel</module>
+        <module>m2_demos</module>
     </modules>
 
 
