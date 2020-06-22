@@ -9,6 +9,20 @@ import java.util.TimerTask;
 做一个时间显示器，每隔一秒更新当前时间
  */
 public class Demo01 {
+
+    public static void clear() {
+        //
+        try {
+            //windows
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            //linux
+            //new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (Exception e) {
+
+        }
+    }
+
+
     public static void main(String[] args) {
             //1:获取当前时间
 //             String time = getNowTime();
@@ -18,7 +32,9 @@ public class Demo01 {
             //3:设置定时的时间间隔
             timer.schedule(new TimerTask() {
                 @Override
-                public void run() {//run方法里面写定时的任务代码
+                public void run() {
+                    clear(); //清除屏幕的内容
+                    //run方法里面写定时的任务代码
                     String time = getNowTime();
                     System.out.println(time);
                 }
