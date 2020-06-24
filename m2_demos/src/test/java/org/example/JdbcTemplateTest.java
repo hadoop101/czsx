@@ -2,6 +2,7 @@ package org.example;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,19 +13,30 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class JdbcTemplateTest {
-    @Test
-    public void test01Druid() throws Exception {
-
+    //类名  对象名 = null ; 定义一个成员变量，可以被所有方法访问
+    JdbcTemplate jdbcTemplate = null;
+    @Before
+    public void init() throws Exception {
+        System.out.println("----init-----");
         //1:创建jdbcTemplate
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate = new JdbcTemplate();
 
         //2:设置druid
         jdbcTemplate.setDataSource(getDruidDataSource());
 
+    }
+    @Test
+    public void test01Druid() throws Exception {
+        System.out.println("----test01Druid-----");
         //3:调 update 添加，删除，修改 ,query 查询
         jdbcTemplate.update("delete from tab_user where uid = ?",2);//参1，sql语句，参2 参数
     }
 
+    @Test
+    public void test02Insert(){
+        System.out.println("---test02");
+        jdbcTemplate.update("INSERT INTO tab_user  (uid,username,`password`)VALUES(?,?,?);",1003L,"tony","456");
+    }
     private DataSource getDruidDataSource() throws Exception {
         //1:读配置文件
         InputStream inputStream = DruidTest.class.getResourceAsStream("/druid.properties");
