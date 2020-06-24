@@ -37,6 +37,11 @@ public class JdbcTemplateTest {
         System.out.println("---test02");
         jdbcTemplate.update("INSERT INTO tab_user  (uid,username,`password`)VALUES(?,?,?);",1003L,"tony","456");
     }
+    @Test
+    public void test03update(){
+        System.out.println("---test03");
+        jdbcTemplate.update("UPDATE tab_user SET username = ?,`password` = ? WHERE uid =?","baoqiang","1234",1003L);
+    }
     private DataSource getDruidDataSource() throws Exception {
         //1:读配置文件
         InputStream inputStream = DruidTest.class.getResourceAsStream("/druid.properties");
