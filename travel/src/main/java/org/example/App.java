@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.p01web.MyScreen;
+import org.example.p01web.UserLoginScreen;
 import org.example.p01web.UserRegisterScreen;
 import org.example.p02service.UserService;
 import org.example.p04bean.User;
@@ -17,7 +17,7 @@ public class App
         for(int i = 0;i<3;i++){
 
              //1:显示登录界面
-            MyScreen myScreen = new MyScreen();
+            UserLoginScreen myScreen = new UserLoginScreen();
             myScreen.showLogin();
             //2:获取界面输入的数据
             User user = myScreen.getData();
