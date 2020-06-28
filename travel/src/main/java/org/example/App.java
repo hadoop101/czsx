@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.p01web.MyScreen;
+import org.example.p01web.UserRegisterScreen;
 import org.example.p02service.UserService;
 import org.example.p04bean.User;
 
@@ -10,7 +11,7 @@ import org.example.p04bean.User;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main1( String[] args )
     {
         //3次重试的机会
         for(int i = 0;i<3;i++){
@@ -33,5 +34,20 @@ public class App
                 exception.printStackTrace();
             }
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        //1:显示注册页面
+        UserRegisterScreen registerScreen = new UserRegisterScreen();
+        registerScreen.show();
+        //2:提示输入用户信息
+
+        //3:拿到信息
+        User user = registerScreen.getData();
+
+        //4:调用register注册方法
+        UserService userService = new UserService();
+        int code = userService.register(user);
+        registerScreen.showResult(code);
     }
 }
