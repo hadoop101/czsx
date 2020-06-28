@@ -3,6 +3,7 @@ package org.example.p03dao;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.example.p04bean.User;
+import org.example.util.JdbcTemplateUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -19,16 +20,17 @@ public class UserDao {
         //2.1:JdbcTemplate+数据源 依赖 在 pom.xml文件里面添加jdbc,druid,jdbctemplate
         //2.2:配置在resources目录添加druid.properties 配置账号密码主机端口
         //2.3:数据源
-        DataSource dataSource = getDruidDataSource();
+        //DataSource dataSource = getDruidDataSource();
         //2.4:模板对象
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource);
+        //JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        //jdbcTemplate.setDataSource(dataSource);
         //2.5:调查询
         Object[] args ={username,password};
-        Integer count =  jdbcTemplate.queryForObject(sql, args,Integer.class);//参1sql 参2数据 参3返回结果的类型
+        Integer count =   JdbcTemplateUtil.getJdbcTemplate().queryForObject(sql, args,Integer.class);//参1sql 参2数据 参3返回结果的类型
         return count;
     }
     //3:优化，只需要创建一个数据源
+    /*
     private static DataSource dataSource = null;
     private  DataSource getDruidDataSource() throws Exception {
         if(dataSource  == null){
@@ -41,17 +43,15 @@ public class UserDao {
         return dataSource;
     }
 
+     */
+
     //根据用户名查找用户
     public int findByUserName(String username) throws Exception {
         //编写 sql
         String sql = "SELECT COUNT(uid) FROM tab_user WHERE username = ? ";
         //执行sql
-        DataSource dataSource = getDruidDataSource();
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource);
-
-        Integer count = jdbcTemplate.queryForObject(sql,new Object[]{username},Integer.class);
+        Integer count = JdbcTemplateUtil.getJdbcTemplate().queryForObject(sql,new Object[]{username},Integer.class);
         return  count;
     }
 
@@ -59,17 +59,25 @@ public class UserDao {
 
     public void save(User user) throws Exception {
         //编写 sql
-        String sql = "INSERT INTO tab_user (username,`password`,`name`,birthday,sex,telephone,email) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tab_user (username,`password`,`name`,birthday,sex,telephone,email)" +
+                " VALUES (?,?,?,?,?,?,?)";
 
         //执行sql
-
-        DataSource dataSource = getDruidDataSource();
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource);
         //update 修改
-        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getName(),
+        JdbcTemplateUtil.getJdbcTemplate().update(sql,user.getUsername(),user.getPassword(),user.getName(),
                 user.getBirthday(),user.getSex(),user.getTelephone(),user.getEmail());
 
     }
+    /*
+    public  JdbcTemplate getJdbcTemplate() throws Exception {
+        //获取数据源
+        DataSource dataSource = getDruidDataSource();
+        //创建模板对象
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        //设置数据源
+        jdbcTemplate.setDataSource(dataSource);
+        //返回模板对象
+        return jdbcTemplate;
+    }*/
+
 }
