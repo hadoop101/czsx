@@ -2,6 +2,7 @@ package org.example.p03dao;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import org.example.p04bean.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -24,7 +25,7 @@ public class UserDao {
         jdbcTemplate.setDataSource(dataSource);
         //2.5:调查询
         Object[] args ={username,password};
-        Integer count =  jdbcTemplate.queryForObject(sql, args,Integer.class);//参1sql参2数据参3返回结果的类型
+        Integer count =  jdbcTemplate.queryForObject(sql, args,Integer.class);//参1sql 参2数据 参3返回结果的类型
         return count;
     }
     //3:优化，只需要创建一个数据源
@@ -38,5 +39,37 @@ public class UserDao {
             dataSource = DruidDataSourceFactory.createDataSource(properties);//使用properties数据创建连接池
         }
         return dataSource;
+    }
+
+    //根据用户名查找用户
+    public int findByUserName(String username) throws Exception {
+        //编写 sql
+        String sql = "SELECT COUNT(uid) FROM tab_user WHERE username = ? ";
+        //执行sql
+        DataSource dataSource = getDruidDataSource();
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource);
+
+        Integer count = jdbcTemplate.queryForObject(sql,new Object[]{username},Integer.class);
+        return  count;
+    }
+
+    //保存用户
+
+    public void save(User user) throws Exception {
+        //编写 sql
+        String sql = "INSERT INTO tab_user (username,`password`,`name`,birthday,sex,telephone,email) VALUES (?,?,?,?,?,?,?)";
+
+        //执行sql
+
+        DataSource dataSource = getDruidDataSource();
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource);
+        //update 修改
+        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getName(),
+                user.getBirthday(),user.getSex(),user.getTelephone(),user.getEmail());
+
     }
 }
