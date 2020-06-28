@@ -37,7 +37,7 @@ public class UserServiceTest {
 
         //1:模拟一个用户
         User  user = new User();
-        user.setUsername("zhangsan");
+        user.setUsername("hadoop1008");
         user.setPassword("1234");
         user.setEmail("hadoop101@126.com");
         user.setName("rose ttnk");
