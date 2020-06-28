@@ -5,18 +5,8 @@ import org.example.p04bean.User;
 import java.util.Scanner;
 
 //用户的注册页面
-public class UserRegisterScreen {
-    public static void clear() {
-        //
-        try {
-            //windows
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            //linux
-            //new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (Exception e) {
+public class UserRegisterScreen extends BaseScreen{
 
-        }
-    }
     public void show() {
         clear();
         System.out.println("==============用户注册=============");

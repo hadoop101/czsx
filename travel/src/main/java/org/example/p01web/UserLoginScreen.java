@@ -4,18 +4,7 @@ import org.example.p04bean.User;
 
 import java.util.Scanner;
 
-public class MyScreen {
-    public static void clear() {
-        //
-        try {
-            //windows
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            //linux
-            //new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (Exception e) {
-
-        }
-    }
+public class UserLoginScreen extends BaseScreen{
 
     public void showLogin() {
         clear();
