@@ -4,8 +4,10 @@ import org.example.p01web.CategoryScreen;
 import org.example.p01web.UserLoginScreen;
 import org.example.p01web.UserRegisterScreen;
 import org.example.p02service.CategoryService;
+import org.example.p02service.RouteService;
 import org.example.p02service.UserService;
 import org.example.p04bean.Category;
+import org.example.p04bean.Route;
 import org.example.p04bean.User;
 
 import java.util.List;
@@ -66,5 +68,14 @@ public class App
         List<Category> list = categoryService.findAll();
 
         categoryScreen.show(list);
+        //输入一个整数(cid)，显示该分类下的旅游信息
+        int cid = categoryScreen.getCid();
+
+        //调用业务方法获取分类下的路线信息
+        RouteService routeService = new RouteService();
+        List<Route> routeList = routeService.findRoutesByCid(cid);
+
+        //显示
+        categoryScreen.showRoutes(routeList);
     }
 }
