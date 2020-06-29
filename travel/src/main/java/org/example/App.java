@@ -1,9 +1,14 @@
 package org.example;
 
+import org.example.p01web.CategoryScreen;
 import org.example.p01web.UserLoginScreen;
 import org.example.p01web.UserRegisterScreen;
+import org.example.p02service.CategoryService;
 import org.example.p02service.UserService;
+import org.example.p04bean.Category;
 import org.example.p04bean.User;
+
+import java.util.List;
 
 /**
  * Hello world!
@@ -36,7 +41,7 @@ public class App
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main2(String[] args) throws Exception {
         //1:显示注册页面
         UserRegisterScreen registerScreen = new UserRegisterScreen();
         registerScreen.show();
@@ -49,5 +54,17 @@ public class App
         UserService userService = new UserService();
         int code = userService.register(user);
         registerScreen.showResult(code);
+    }
+
+    public static void main(String[] args) throws Exception {
+        //显示当前是分类页面
+        CategoryScreen  categoryScreen = new CategoryScreen();
+        categoryScreen.show();
+
+        //取数据来显示在页面
+        CategoryService categoryService = new CategoryService();
+        List<Category> list = categoryService.findAll();
+
+        categoryScreen.show(list);
     }
 }
