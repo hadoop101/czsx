@@ -52,4 +52,29 @@ public class RouteService {
 
        return pageBean;
     }
+
+    //搜索一个分页
+    public PageBean<Route> search(String keyword, int pageSize, int currentPage) throws Exception {
+        //keyword 搜索词 pageSize 每页记录数  currentPage第几页
+        PageBean<Route> pageBean = new PageBean<Route>();
+        //5成员变量
+        pageBean.setPageSize(pageSize);//1
+        pageBean.setCurrentPage(currentPage);//2
+        //调用dao
+        RouteDao routeDao = new RouteDao();
+        int count = routeDao.findCountByKeyWord(keyword);
+        pageBean.setTotalCount(count);//3
+        //总页数
+        int totalPage ;
+        if (count % pageSize == 0) {
+            totalPage = count / pageSize;
+        } else {
+            totalPage = count / pageSize + 1;
+        }
+        pageBean.setTotalPage(totalPage);//4
+        //最后一个list
+        List<Route> list = routeDao.findPageByKeyWord(keyword,pageSize,currentPage);//5
+        pageBean.setList(list);
+        return pageBean;
+    }
 }

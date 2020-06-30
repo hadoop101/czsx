@@ -56,4 +56,22 @@ public class RouteDao {
         List<Route> list = JdbcTemplateUtil.getJdbcTemplate().query(sql,new Object[]{cid,start,num},mapper);
         return list;
     }
+
+    //以下两个查询按照搜索词
+    public int findCountByKeyWord(String keyword) throws Exception {
+        //编写sql
+        String sql = "SELECT COUNT(*)FROM tab_route WHERE rname LIKE ?";
+        //执行sql
+        int count =  JdbcTemplateUtil.getJdbcTemplate().queryForObject(sql,new Object[]{"%"+keyword+"%"},Integer.class);
+        return count;
+    }
+
+    public List<Route> findPageByKeyWord(String keyword, int pageSize, int currentPage) throws Exception {
+        //编写sql
+        String sql = "SELECT *FROM tab_route WHERE rname LIKE ? LIMIT ?,?";
+        int start = (currentPage - 1) * pageSize;
+        //执行查询
+        List<Route> list=JdbcTemplateUtil.getJdbcTemplate().query(sql,new Object[]{"%"+keyword+"%",start,pageSize},mapper);
+        return list;
+    }
 }

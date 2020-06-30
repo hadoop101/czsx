@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.p01web.CategoryScreen;
+import org.example.p01web.SearchScreen;
+import org.example.p01web.SearchScreen;
 import org.example.p01web.UserLoginScreen;
 import org.example.p01web.UserRegisterScreen;
 import org.example.p02service.CategoryService;
@@ -59,7 +61,7 @@ public class App
         registerScreen.showResult(code);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main3(String[] args) throws Exception {
         categoryLogic();
     }
     public static void categoryLogic()throws Exception{
@@ -110,4 +112,55 @@ public class App
 
         //categoryScreen.showRoutes(routeList);
     }
+
+    public static void main(String[] args) throws Exception {
+        //1:显示一个搜索界面
+        SearchScreen searchScreen  = new SearchScreen();
+        searchScreen.show();
+        //2:获取keyword
+        String keyword = searchScreen.getKeyWord();
+        int currentPage = -1;
+        int pageSize = 10;
+        PageBean<Route> pageBean = null;
+        //3:输入当前页号
+        //4:调用业务类
+        RouteService routeService = new RouteService();
+        while(true){
+            if(currentPage == -1){
+                currentPage = 1;
+                pageBean = routeService.search(keyword,pageSize,currentPage);
+                searchScreen.showPageBean(pageBean);
+            }
+            //获取用户输入的页号
+            currentPage = searchScreen.getCurrentPage();
+            if(currentPage >= 1 && currentPage <= pageBean.getTotalPage()){
+                pageBean = routeService.search(keyword,pageSize,currentPage);
+                searchScreen.showPageBean(pageBean);
+            }else{
+                //跳到其他页面
+                break;
+            }
+
+        }
+
+        //4:显示
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
