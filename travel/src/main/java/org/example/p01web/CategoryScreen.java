@@ -1,6 +1,7 @@
 package org.example.p01web;
 
 import org.example.p04bean.Category;
+import org.example.p04bean.PageBean;
 import org.example.p04bean.Route;
 
 import java.util.List;
@@ -58,5 +59,20 @@ public class CategoryScreen extends BaseScreen{
         }
 
         System.out.println(stringBuilder.toString());
+    }
+
+    public void showPageBean(PageBean<Route> pageBean) {
+        clear();
+        System.out.println("=================路线页面===============");
+        showRoutes(pageBean.getList());//10条记录
+    }
+
+    public int getCurrentPage(PageBean<Route> pageBean) {
+        System.out.println("【当前是第"+pageBean.getCurrentPage()+"页,共"+pageBean.getTotalPage()+"页】");
+        System.out.println("可以输入页号：1到"+pageBean.getTotalPage()+":");
+
+        Scanner scanner = new Scanner(System.in);
+        int num  =  scanner.nextInt();
+        return  num;
     }
 }

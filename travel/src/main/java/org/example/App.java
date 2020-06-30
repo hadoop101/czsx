@@ -7,6 +7,7 @@ import org.example.p02service.CategoryService;
 import org.example.p02service.RouteService;
 import org.example.p02service.UserService;
 import org.example.p04bean.Category;
+import org.example.p04bean.PageBean;
 import org.example.p04bean.Route;
 import org.example.p04bean.User;
 
@@ -73,9 +74,30 @@ public class App
 
         //调用业务方法获取分类下的路线信息
         RouteService routeService = new RouteService();
-        List<Route> routeList = routeService.findRoutesByCid(cid);
+        //List<Route> routeList = routeService.findRoutesByCid(cid);
+        //使用分页的业务逻辑
+        int pageSize = 10; //给定一页显示的数量
+        int currPage = -1;
+        PageBean<Route> pageBean = null;
+
+        //51=> 1 2 3 4 ..
+        while(true){
+            //
+            if(currPage == -1){
+               currPage = 1;
+               pageBean =  routeService.queryByPage(cid,pageSize,currPage);
+               categoryScreen.showPageBean(pageBean);
+            }
+            //接下来让用户输入页号
+            currPage = categoryScreen.getCurrentPage(pageBean);
+            pageBean =  routeService.queryByPage(cid,pageSize,currPage);
+            categoryScreen.showPageBean(pageBean);
+        }
 
         //显示
-        categoryScreen.showRoutes(routeList);
+
+        //让用户选择显示哪个分页的数据
+
+        //categoryScreen.showRoutes(routeList);
     }
 }

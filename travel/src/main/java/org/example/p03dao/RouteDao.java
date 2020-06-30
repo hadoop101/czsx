@@ -35,4 +35,25 @@ public class RouteDao {
         List<Route> list = JdbcTemplateUtil.getJdbcTemplate().query(sql,mapper,cid);
         return list;
     }
+
+    //查指定分类下的总记录数
+    public int findCount(Integer cid) throws Exception {
+        //sql
+        String sql = "SELECT COUNT(*) FROM tab_route WHERE cid = ? ";
+        //执行sql
+        int count = JdbcTemplateUtil.getJdbcTemplate().queryForObject(sql,new Object[]{cid},Integer.class);
+        return count;
+    }
+
+    //查询指定范围的分页
+    public List<Route> findPage(Integer cid, int pageSize, int currentPage) throws Exception {
+        //查找公式
+        int start = (currentPage - 1) * pageSize;
+        int num = pageSize;
+        //limit
+        String sql = "SELECT * FROM tab_route WHERE cid = ? LIMIT ?,?;";
+        //执行sql
+        List<Route> list = JdbcTemplateUtil.getJdbcTemplate().query(sql,new Object[]{cid,start,num},mapper);
+        return list;
+    }
 }
