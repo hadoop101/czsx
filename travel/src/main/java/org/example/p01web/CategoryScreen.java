@@ -69,7 +69,7 @@ public class CategoryScreen extends BaseScreen{
 
     public int getCurrentPage(PageBean<Route> pageBean) {
         System.out.println("【当前是第"+pageBean.getCurrentPage()+"页,共"+pageBean.getTotalPage()+"页】");
-        System.out.println("可以输入页号：1到"+pageBean.getTotalPage()+":");
+        System.out.println("可以输入页号：1到"+pageBean.getTotalPage()+"的数字进行查看分页，其他数字就退回分类页:");
 
         Scanner scanner = new Scanner(System.in);
         int num  =  scanner.nextInt();

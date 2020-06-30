@@ -60,6 +60,9 @@ public class App
     }
 
     public static void main(String[] args) throws Exception {
+        categoryLogic();
+    }
+    public static void categoryLogic()throws Exception{
         //显示当前是分类页面
         CategoryScreen  categoryScreen = new CategoryScreen();
         categoryScreen.show();
@@ -84,14 +87,21 @@ public class App
         while(true){
             //
             if(currPage == -1){
-               currPage = 1;
-               pageBean =  routeService.queryByPage(cid,pageSize,currPage);
-               categoryScreen.showPageBean(pageBean);
+                currPage = 1;
+                pageBean =  routeService.queryByPage(cid,pageSize,currPage);
+                categoryScreen.showPageBean(pageBean);
             }
             //接下来让用户输入页号
             currPage = categoryScreen.getCurrentPage(pageBean);
-            pageBean =  routeService.queryByPage(cid,pageSize,currPage);
-            categoryScreen.showPageBean(pageBean);
+            //判断 如果是在页号范围内的数据，查询显示分页，否则退回分类页面
+            if(currPage >= 1 && currPage <= pageBean.getTotalPage()){
+                pageBean =  routeService.queryByPage(cid,pageSize,currPage);
+                categoryScreen.showPageBean(pageBean);
+            }else{
+                categoryLogic();
+                break;
+            }
+
         }
 
         //显示
