@@ -1,7 +1,9 @@
 package org.example;
 
-import org.example.p01web.*;
+import org.example.p01web.CategoryScreen;
 import org.example.p01web.SearchScreen;
+import org.example.p01web.UserLoginScreen;
+import org.example.p01web.UserRegisterScreen;
 import org.example.p02service.CategoryService;
 import org.example.p02service.RouteService;
 import org.example.p02service.UserService;
@@ -16,7 +18,7 @@ import java.util.List;
  * Hello world!
  *
  */
-public class App 
+public class App1
 {
     public static void main1( String[] args )
     {
@@ -110,7 +112,7 @@ public class App
         //categoryScreen.showRoutes(routeList);
     }
 
-    public static void main4(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         //1:显示一个搜索界面
         SearchScreen searchScreen  = new SearchScreen();
         searchScreen.show();
@@ -141,26 +143,6 @@ public class App
         }
 
         //4:显示
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        //1:创建欢迎界面
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
-        //2:显示加载
-        welcomeScreen.loading();
-        //3:显示欢迎信息
-        welcomeScreen.show();
-        //4:获取整数
-        int num = welcomeScreen.getNum();
-        if (1 == num) {
-            //进入注册页面
-            System.out.println("注册");
-        } else if (2 == num) {
-            //进入登录页面
-            System.out.println("注册");
-        } else {
-            System.out.println("已退出");
-        }
     }
 
 
